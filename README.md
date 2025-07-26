@@ -5,135 +5,139 @@ This document outlines the Lua API for interacting with game entities, weapons, 
 ## Enums
 
 ### Hitboxes
-- `HEAD`: number
-- `NECK`: number
-- `PELVIS`: number
-- `STOMACH`: number
-- `CHEST`: number
-- `RIGHT_THIGH`: number
-- `LEFT_THIGH`: number
-- `RIGHT_CALF`: number
-- `LEFT_CALF`: number
-- `RIGHT_FOOT`: number
-- `LEFT_FOOT`: number
-- `RIGHT_HAND`: number
-- `LEFT_HAND`: number
-- `RIGHT_UPPER_ARM`: number
-- `RIGHT_FOREARM`: number
-- `LEFT_UPPER_ARM`: number
-- `LEFT_FOREARM`: number
+- `HEAD`: number - Head hitbox.
+- `NECK`: number - Neck hitbox.
+- `PELVIS`: number - Pelvis hitbox.
+- `STOMACH`: number - Stomach hitbox.
+- `CHEST`: number - Chest hitbox.
+- `RIGHT_THIGH`: number - Right thigh hitbox.
+- `LEFT_THIGH`: number - Left thigh hitbox.
+- `RIGHT_CALF`: number - Right calf hitbox.
+- `LEFT_CALF`: number - Left calf hitbox.
+- `RIGHT_FOOT`: number - Right foot hitbox.
+- `LEFT_FOOT`: number - Left foot hitbox.
+- `RIGHT_HAND`: number - Right hand hitbox.
+- `LEFT_HAND`: number - Left hand hitbox.
+- `RIGHT_UPPER_ARM`: number - Right upper arm hitbox.
+- `RIGHT_FOREARM`: number - Right forearm hitbox.
+- `LEFT_UPPER_ARM`: number - Left upper arm hitbox.
+- `LEFT_FOREARM`: number - Left forearm hitbox.
 
 ### Buttons
-- `IN_ATTACK`: number
-- `IN_JUMP`: number
-- `IN_DUCK`: number
-- `IN_FORWARD`: number
-- `IN_BACK`: number
-- `IN_USE`: number
-- `IN_CANCEL`: number
-- `IN_LEFT`: number
-- `IN_RIGHT`: number
-- `IN_MOVELEFT`: number
-- `IN_MOVERIGHT`: number
-- `IN_ATTACK2`: number
-- `IN_RUN`: number
-- `IN_RELOAD`: number
-- `IN_ALT1`: number
-- `IN_ALT2`: number
-- `IN_SCORE`: number
-- `IN_SPEED`: number
-- `IN_WALK`: number
-- `IN_ZOOM`: number
-- `IN_WEAPON1`: number
-- `IN_WEAPON2`: number
-- `IN_BULLRUSH`: number
-- `IN_GRENADE1`: number
-- `IN_GRENADE2`: number
-- `IN_LOOKSPIN`: number
+- `IN_ATTACK`: number - Primary attack button.
+- `IN_JUMP`: number - Jump button.
+- `IN_DUCK`: number - Duck button.
+- `IN_FORWARD`: number - Move forward button.
+- `IN_BACK`: number - Move backward button.
+- `IN_USE`: number - Use button.
+- `IN_CANCEL`: number - Cancel button.
+- `IN_LEFT`: number - Look left button.
+- `IN_RIGHT`: number - Look right button.
+- `IN_MOVELEFT`: number - Move left button.
+- `IN_MOVERIGHT`: number - Move right button.
+- `IN_ATTACK2`: number - Secondary attack button.
+- `IN_RUN`: number - Run button.
+- `IN_RELOAD`: number - Reload button.
+- `IN_ALT1`: number - Alternate button 1.
+- `IN_ALT2`: number - Alternate button 2.
+- `IN_SCORE`: number - Show scoreboard button.
+- `IN_SPEED`: number - Speed toggle button.
+- `IN_WALK`: number - Walk button.
+- `IN_ZOOM`: number - Zoom button.
+- `IN_WEAPON1`: number - Weapon slot 1 button.
+- `IN_WEAPON2`: number - Weapon slot 2 button.
+- `IN_BULLRUSH`: number - Bullrush button.
+- `IN_GRENADE1`: number - Grenade 1 button.
+- `IN_GRENADE2`: number - Grenade 2 button.
+- `IN_LOOKSPIN`: number - Look spin button.
 
 ### Contents
-- `CONTENTS_EMPTY`: number
-- `CONTENTS_SOLID`: number
-- `CONTENTS_WINDOW`: number
-- `CONTENTS_AUX`: number
-- `CONTENTS_GRATE`: number
-- `CONTENTS_SLIME`: number
-- `CONTENTS_WATER`: number
-- `CONTENTS_MIST`: number
-- `CONTENTS_OPAQUE`: number
-- `LAST_VISIBLE_CONTENTS`: number
-- `ALL_VISIBLE_CONTENTS`: number
-- `CONTENTS_TESTFOGVOLUME`: number
-- `CONTENTS_UNUSED5`: number
-- `CONTENTS_UNUSED6`: number
-- `CONTENTS_TEAM1`: number
-- `CONTENTS_TEAM2`: number
-- `CONTENTS_IGNORE_NODRAW_OPAQUE`: number
-- `CONTENTS_MOVEABLE`: number
-- `CONTENTS_AREAPORTAL`: number
-- `CONTENTS_PLAYERCLIP`: number
-- `CONTENTS_MONSTERCLIP`: number
-- `CONTENTS_CURRENT_0`: number
-- `CONTENTS_CURRENT_90`: number
-- `CONTENTS_CURRENT_180`: number
-- `CONTENTS_CURRENT_270`: number
-- `CONTENTS_CURRENT_UP`: number
-- `CONTENTS_CURRENT_DOWN`: number
-- `CONTENTS_ORIGIN`: number
-- `CONTENTS_MONSTER`: number
-- `CONTENTS_DEBRIS`: number
-- `CONTENTS_DETAIL`: number
-- `CONTENTS_TRANSLUCENT`: number
-- `CONTENTS_LADDER`: number
-- `CONTENTS_HITBOX`: number
+- `CONTENTS_EMPTY`: number - Empty space.
+- `CONTENTS_SOLID`: number - Solid surface.
+- `CONTENTS_WINDOW`: number - Window surface.
+- `CONTENTS_AUX`: number - Auxiliary surface.
+- `CONTENTS_GRATE`: number - Grate surface.
+- `CONTENTS_SLIME`: number - Slime surface.
+- `CONTENTS_WATER`: number - Water surface.
+- `CONTENTS_MIST`: number - Mist surface.
+- `CONTENTS_OPAQUE`: number - Opaque surface.
+- `LAST_VISIBLE_CONTENTS`: number - Last visible content flag.
+- `ALL_VISIBLE_CONTENTS`: number - All visible content flags combined.
+- `CONTENTS_TESTFOGVOLUME`: number - Fog volume test flag.
+- `CONTENTS_UNUSED5`: number - Unused content flag 5.
+- `CONTENTS_UNUSED6`: number - Unused content flag 6.
+- `CONTENTS_TEAM1`: number - Team 1 content flag.
+- `CONTENTS_TEAM2`: number - Team 2 content flag.
+- `CONTENTS_IGNORE_NODRAW_OPAQUE`: number - Ignore nodraw opaque flag.
+- `CONTENTS_MOVEABLE`: number - Moveable object flag.
+- `CONTENTS_AREAPORTAL`: number - Area portal flag.
+- `CONTENTS_PLAYERCLIP`: number - Player clip flag.
+- `CONTENTS_MONSTERCLIP`: number - Monster clip flag.
+- `CONTENTS_CURRENT_0`: number - Current direction 0 degrees.
+- `CONTENTS_CURRENT_90`: number - Current direction 90 degrees.
+- `CONTENTS_CURRENT_180`: number - Current direction 180 degrees.
+- `CONTENTS_CURRENT_270`: number - Current direction 270 degrees.
+- `CONTENTS_CURRENT_UP`: number - Current direction upward.
+- `CONTENTS_CURRENT_DOWN`: number - Current direction downward.
+- `CONTENTS_ORIGIN`: number - Origin point flag.
+- `CONTENTS_MONSTER`: number - Monster entity flag.
+- `CONTENTS_DEBRIS`: number - Debris flag.
+- `CONTENTS_DETAIL`: number - Detail geometry flag.
+- `CONTENTS_TRANSLUCENT`: number - Translucent surface flag.
+- `CONTENTS_LADDER`: number - Ladder surface flag.
+- `CONTENTS_HITBOX`: number - Hitbox flag.
 
 ### Surface Flags
-- `SURF_LIGHT`: number
-- `SURF_SLICK`: number
-- `SURF_SKY`: number
-- `SURF_WARP`: number
-- `SURF_TRANS`: number
-- `SURF_WET`: number
-- `SURF_TRIGGER`: number
-- `SURF_NODRAW`: number
-- `SURF_HINT`: number
-- `SURF_SKIP`: number
-- `SURF_NOLIGHT`: number
-- `SURF_BUMPLIGHT`: number
-- `SURF_NOSHADOWS`: number
-- `SURF_NODECALS`: number
-- `SURF_NOCHOP`: number
-- `SURF_HITBOX`: number
+- `SURF_LIGHT`: number - Surface emits light.
+- `SURF_SLICK`: number - Slippery surface.
+- `SURF_SKY`: number - Skybox surface.
+- `SURF_WARP`: number - Teleport surface.
+- `SURF_TRANS`: number - Transparent surface.
+- `SURF_WET`: number - Wet surface.
+- `SURF_TRIGGER`: number - Trigger surface.
+- `SURF_NODRAW`: number - Non-rendered surface.
+- `SURF_HINT`: number - Hint surface for AI.
+- `SURF_SKIP`: number - Skipped surface.
+- `SURF_NOLIGHT`: number - No light surface.
+- `SURF_BUMPLIGHT`: number - Bump-mapped light surface.
+- `SURF_NOSHADOWS`: number - No shadows surface.
+- `SURF_NODECALS`: number - No decals surface.
+- `SURF_NOCHOP`: number - No chop surface.
+- `SURF_HITBOX`: number - Hitbox surface.
 
 ### Masks
-- `MASK_ALL`: number
-- `MASK_SOLID`: number
-- `MASK_PLAYERSOLID`: number
-- `MASK_NPCSOLID`: number
-- `MASK_WATER`: number
-- `MASK_OPAQUE`: number
-- `MASK_OPAQUE_AND_NPCS`: number
-- `MASK_VISIBLE`: number
-- `MASK_VISIBLE_AND_NPCS`: number
-- `MASK_SHOT`: number
-- `MASK_SHOT_HULL`: number
-- `MASK_SHOT_HULL_EX`: number
-- `MASK_SHOT_PORTAL`: number
-- `MASK_SOLID_BRUSHONLY`: number
-- `MASK_PLAYERSOLID_BRUSHONLY`: number
-- `MASK_NPCSOLID_BRUSHONLY`: number
-- `MASK_NPCWORLDSTATIC`: number
-- `MASK_SPLITAREAPORTAL`: number
-- `MASK_CURRENT`: number
+- `MASK_ALL`: number - All collision mask.
+- `MASK_SOLID`: number - Solid objects mask.
+- `MASK_PLAYERSOLID`: number - Player solid mask.
+- `MASK_NPCSOLID`: number - NPC solid mask.
+- `MASK_WATER`: number - Water mask.
+- `MASK_OPAQUE`: number - Opaque objects mask.
+- `MASK_OPAQUE_AND_NPCS`: number - Opaque and NPC mask.
+- `MASK_VISIBLE`: number - Visible objects mask.
+- `MASK_VISIBLE_AND_NPCS`: number - Visible and NPC mask.
+- `MASK_SHOT`: number - Shot trace mask.
+- `MASK_SHOT_HULL`: number - Shot hull trace mask.
+- `MASK_SHOT_HULL_EX`: number - Extended shot hull mask.
+- `MASK_SHOT_PORTAL`: number - Portal shot mask.
+- `MASK_SOLID_BRUSHONLY`: number - Solid brush-only mask.
+- `MASK_PLAYERSOLID_BRUSHONLY`: number - Player solid brush-only mask.
+- `MASK_NPCSOLID_BRUSHONLY`: number - NPC solid brush-only mask.
+- `MASK_NPCWORLDSTATIC`: number - NPC world static mask.
+- `MASK_SPLITAREAPORTAL`: number - Split area portal mask.
+- `MASK_CURRENT`: number - Current flow mask.
 
 ### Network Flow
 - `FLOW_OUTGOING`: number - Represents outgoing network flow.
 - `FLOW_INCOMING`: number - Represents incoming network flow.
 - `MAX_FLOWS`: number - Maximum number of network flows.
 
+### Keybind Types
+- `BIND_TYPE_TOGGLE`: number - Keybind toggles between on and off states.
+- `BIND_TYPE_HOLD`: number - Keybind is active only while held.
+
 ## Usertypes
 
-### globalVars
+### CGlobalVarsBase
 Represents global game variables, providing access to timing and network-related properties.
 
 **Properties:**
@@ -212,18 +216,18 @@ Represents properties and characteristics of a weapon in the game.
 Represents a handle to a game entity, typically used to reference entities like weapons, players, or other objects.
 
 **Methods:**
-- `get(): entity | nil` - Retrieves the entity associated with this handle. Returns `nil` if the handle is invalid.
+- `get(): IClientEntity | nil` - Retrieves the entity associated with this handle. Returns `nil` if the handle is invalid.
 
-### weapon
-Inherits from `entity`. Represents a combat weapon in the game.
+### C_BaseCombatWeapon
+Inherits from `IClientEntity`. Represents a combat weapon in the game.
 
 **Methods:**
 - `getName(): string` - Returns the name of the weapon.
 - `getWeaponID(): number` - Returns the weapon's unique ID.
-- `getCSWpnData(): CCSWeaponInfo` - Returns the weapon's configuration data.
-- `getNetvars(): wpnNetvars` - Returns the weapon's network variables.
+- `getCSWpnData(): CCSWeaponInfo` - Returns the weapon’s configuration data.
+- `getNetvars(): WeaponNetvars` - Returns the weapon’s network variables.
 
-### entity
+### IClientEntity
 Represents a game entity.
 
 **Properties:**
@@ -233,11 +237,11 @@ Represents a game entity.
 - `absAngles`: vector - Absolute angles.
 
 **Methods:**
-- `getField(field: string): any` -//*[@Assistant: Retrieves a field value by name.
-- `getNetvars(): entNetvars` - Returns the entity's network variables.
+- `getField(field: string): any` - Retrieves a field value by name.
+- `getNetvars(): EntityNetvars` - Returns the entity’s network variables.
 
-### wpnNetvars
-Inherits from `entNetvars`. Represents network variables specific to weapons, including grenades and specific weapon types like Glock, FAMAS, M4A1, and USP.
+### WeaponNetvars
+Inherits from `EntityNetvars`. Represents network variables specific to weapons, including grenades and specific weapon types like Glock, FAMAS, M4A1, and USP.
 
 **Properties:**
 - `nextPrimaryAttack`: number - Time until the next primary attack is available.
@@ -255,27 +259,27 @@ Inherits from `entNetvars`. Represents network variables specific to weapons, in
 - `silencerOnM4A1`: boolean - Whether the silencer is attached to the M4A1.
 - `silencerOnUSP`: boolean - Whether the silencer is attached to the USP.
 
-### entNetvars
+### EntityNetvars
 Represents network variables for game entities.
 
 **Properties:**
-- `vecOrigin`: vector - Entity's origin position.
-- `vecMins`: vector - Minimum bounds of the entity's collision box.
-- `vecMaxs`: vector - Maximum bounds of the entity's collision box.
+- `vecOrigin`: vector - Entity’s origin position.
+- `vecMins`: vector - Minimum bounds of the entity’s collision box.
+- `vecMaxs`: vector - Maximum bounds of the entity’s collision box.
 - `renderMode`: number - Rendering mode of the entity.
-- `modelIndex`: number - Index of the entity's model.
+- `modelIndex`: number - Index of the entity’s model.
 - `renderFX`: number - Render effects applied to the entity.
-- `angRotation`: vector - Entity's rotation angles.
+- `angRotation`: vector - Entity’s rotation angles.
 - `vecOldOrigin`: vector - Previous origin position.
 - `teamNum`: number - Team number of the entity.
 - `simulationTime`: number - Time of the last simulation update.
-- `ownerEntity`: CBaseHandle - Handle to the entity's owner.
+- `ownerEntity`: CBaseHandle - Handle to the entity’s owner.
 - `oldSimulationTime`: number - Previous simulation time.
 - `collisionGroup`: number - Collision group of the entity.
 - `movetype`: number - Movement type of the entity.
 - `takeDamage`: number - Damage handling type.
 - `coordinateFrame`: table - 3x4 transformation matrix for the entity.
-- `skin`: number - Skin index for the entity's model.
+- `skin`: number - Skin index for the entity’s model.
 - `body`: number - Body group index.
 - `hitboxSet`: number - Hitbox set index.
 - `cycle`: number - Animation cycle.
@@ -298,7 +302,7 @@ Represents network variables for game entities.
 - `lifestate`: number - Life state of the entity.
 - `punchAngle`: vector - Recoil punch angle.
 - `punchAngleVel`: vector - Recoil punch angle velocity.
-- `velocity`: vector - Entity's velocity.
+- `velocity`: vector - Entity’s velocity.
 - `baseVelocity`: vector - Base velocity for movement.
 - `fov`: number - Field of view.
 - `stamina`: number - Stamina value.
@@ -309,7 +313,7 @@ Represents network variables for game entities.
 - `fallVelocity`: number - Velocity of falling.
 - `viewModel`: CBaseHandle - Handle to the view model.
 - `eyeAngles`: vector - Eye angles for the player.
-- `account`: number - Player's account balance.
+- `account`: number - Player’s account balance.
 - `armorValue`: number - Armor value.
 - `flashMaxAlpha`: number - Maximum alpha for flashbang effect.
 - `flashDuration`: number - Duration of flashbang effect.
@@ -331,44 +335,57 @@ Represents network variables for game entities.
 - `myWeapons`: table - Array of 8 CBaseHandle values for weapons.
 - `ammo`: table - Array of 32 ammo counts.
 
-### usercmd
+### CUserCmd
 Represents a user command for input handling.
 
 **Properties:**
-- `commandNumber`: number
-- `tickCount`: number
-- `buttons`: number
-- `weaponSelect`: number
-- `weaponSubType`: number
-- `randomSeed`: number
-- `forwardMove`: number
-- `sideMove`: number
-- `upMove`: number
-- `viewAngles`: vector
-- `impulse`: number
-- `mousedx`: number
-- `mousedy`: number
-- `hasBeenPredicted`: boolean
+- `commandNumber`: number - Command sequence number.
+- `tickCount`: number - Tick count for the command.
+- `buttons`: number - Button states (bitmask).
+- `weaponSelect`: number - Selected weapon index.
+- `weaponSubType`: number - Weapon subtype.
+- `randomSeed`: number - Random seed for prediction.
+- `forwardMove`: number - Forward movement input.
+- `sideMove`: number - Side movement input.
+- `upMove`: number - Vertical movement input.
+- `viewAngles`: vector - View angles for the command.
+- `impulse`: number - Impulse command.
+- `mousedx`: number - Mouse X delta.
+- `mousedy`: number - Mouse Y delta.
+- `hasBeenPredicted`: boolean - Whether the command has been predicted.
 
-### cfgVar
-Represents a configuration variable.
+### CKeybind
+Represents a keybind configuration for toggling or holding actions.
 
 **Methods:**
-- `set(value: any): void` - Sets the variable's value.
-- `get(): string` - Gets the variable's value as a string.
+- `active(): boolean` - Checks if the keybind is currently active.
+- `setKeyCode(key: number): void` - Sets the key code for the keybind.
+- `setType(type: number): void` - Sets the keybind type (`BIND_TYPE_TOGGLE` or `BIND_TYPE_HOLD`).
+- `toggle(): void` - Toggles the keybind’s state.
+- `setValue(value: string): void` - Sets the keybind’s value from a string.
+- `getValue(): string` - Gets the keybind’s value as a string.
 
-### gameEvent
+### CConfigVariable
+Represents a configuration variable with keybind support.
+
+**Methods:**
+- `set(value: any): void` - Sets the variable’s value.
+- `get(): string` - Gets the variable’s value as a string.
+- `addDisableVariable(var: CConfigVariable): void` - Adds a variable whose active keybind disables this variable’s keybind.
+- `getKeybind(): CKeybind` - Retrieves the associated keybind.
+
+### IGameEvent
 Represents a game event.
 
 **Methods:**
 - `getEventName(): string` - Gets the event name.
-- `getInt(key: string): number` - Gets an integer value.
-- `getFloat(key: string): number` - Gets a float value.
-- `getBool(key: string): boolean` - Gets a boolean value.
-- `getString(key: string): string` - Gets a string value.
-- `setBool(key: string, value: boolean): void` - Sets a boolean value.
-- `setFloat(key: string, value: number): void` - Sets a float value.
-- `setInt(key: string, value: number): void` - Sets an integer value.
+- `getInt(key: string): number` - Gets an integer value for the specified key.
+- `getFloat(key: string): number` - Gets a float value for the specified key.
+- `getBool(key: string): boolean` - Gets a boolean value for the specified key.
+- `getString(key: string): string` - Gets a string value for the specified key.
+- `setBool(key: string, value: boolean): void` - Sets a boolean value for the specified key.
+- `setFloat(key: string, value: number): void` - Sets a float value for the specified key.
+- `setInt(key: string, value: number): void` - Sets an integer value for the specified key.
 
 ### Beam_t
 Represents a beam entity in the game.
@@ -378,14 +395,14 @@ Represents the configuration for creating a beam.
 
 **Properties:**
 - `type`: number - Type of the beam.
-- `startEnt`: entity | nil - Starting entity for the beam.
+- `startEnt`: IClientEntity | nil - Starting entity for the beam.
 - `startAttachment`: number - Attachment point on the start entity.
-- `endEnt`: entity | nil - Ending entity for the beam.
+- `endEnt`: IClientEntity | nil - Ending entity for the beam.
 - `endAttachment`: number - Attachment point on the end entity.
 - `vecStart`: vector - Starting position of the beam.
 - `vecEnd`: vector - Ending position of the beam.
-- `modelIndex`: number - Index of the beam's model.
-- `modelName`: string | nil - Name of the beam's model.
+- `modelIndex`: number - Index of the beam’s model.
+- `modelName`: string | nil - Name of the beam’s model.
 - `haloIndex`: number - Index of the halo effect.
 - `haloName`: string | nil - Name of the halo effect.
 - `haloScale`: number - Scale of the halo effect.
@@ -393,11 +410,11 @@ Represents the configuration for creating a beam.
 - `width`: number - Width of the beam.
 - `endWidth`: number - Width at the end of the beam.
 - `fadeLength`: number - Length over which the beam fades.
-- `amplitude`: number - Amplitude of the beam's oscillation.
+- `amplitude`: number - Amplitude of the beam’s oscillation.
 - `brightness`: number - Brightness of the beam.
-- `speed`: number - Speed of the beam's animation.
-- `startFrame`: number - Starting frame for the beam's animation.
-- `frameRate`: number - Frame rate of the beam's animation.
+- `speed`: number - Speed of the beam’s animation.
+- `startFrame`: number - Starting frame for the beam’s animation.
+- `frameRate`: number - Frame rate of the beam’s animation.
 - `red`: number - Red color component.
 - `green`: number - Green color component.
 - `blue`: number - Blue color component.
@@ -419,42 +436,42 @@ Manages rendering and manipulation of beams.
 - `createBeamRing(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a ring-shaped beam between entities.
 - `createBeamRingPoint(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a ring-shaped beam at a point.
 - `freeBeam(beam: Beam_t): void` - Frees a beam.
-- `updateBeamInfo(beam: Beam_t, beamInfo: BeamInfo_t): void` - Updates a beam's properties.
+- `updateBeamInfo(beam: Beam_t, beamInfo: BeamInfo_t): void` - Updates a beam’s properties.
 - `drawBeam(beam: Beam_t): void` - Draws a beam.
 
 ### surface_t
 Represents a surface.
 
 **Properties:**
-- `name`: string
-- `surfaceProps`: number
-- `flags`: number
+- `name`: string - Surface name.
+- `surfaceProps`: number - Surface properties.
+- `flags`: number - Surface flags.
 
 ### plane
 Represents a plane.
 
 **Properties:**
-- `normal`: vector
-- `dist`: number
+- `normal`: vector - Plane normal vector.
+- `dist`: number - Distance from origin along the normal.
 
 ### trace_t
 Represents a trace result.
 
 **Properties:**
-- `fractionLeftSolid`: number
-- `surface`: surface_t
-- `hitGroup`: number
-- `physicsBone`: number
-- `ent`: entity
-- `hitbox`: number
-- `startPos`: vector
-- `endPos`: vector
-- `plane`: plane
-- `fraction`: number
-- `contents`: number
-- `dispFlags`: number
-- `allSolid`: boolean
-- `startSolid`: boolean
+- `fractionLeftSolid`: number - Fraction until leaving solid.
+- `surface`: surface_t - Surface hit.
+- `hitGroup`: number - Hit group impacted.
+- `physicsBone`: number - Physics bone hit.
+- `ent`: IClientEntity - Entity hit.
+- `hitbox`: number - Hitbox index.
+- `startPos`: vector - Trace start position.
+- `endPos`: vector - Trace end position.
+- `plane`: plane - Plane of the surface hit.
+- `fraction`: number - Fraction of the trace completed.
+- `contents`: number - Contents hit.
+- `dispFlags`: number - Displacement flags.
+- `allSolid`: boolean - Whether the trace was entirely in solid.
+- `startSolid`: boolean - Whether the trace started in solid.
 
 ### ITraceFilter
 Base type for trace filters.
@@ -466,21 +483,21 @@ Inherits from `ITraceFilter`.
 Inherits from `CTraceFilter`.
 
 **Constructor:**
-- `CTraceFilterSimple(ent: entity)`: Creates a trace filter for a single entity.
+- `CTraceFilterSimple(ent: IClientEntity)`: Creates a trace filter for a single entity.
 
 **Global Function:**
-- `traceFilterSimple(ent: entity): CTraceFilterSimple`
+- `traceFilterSimple(ent: IClientEntity): CTraceFilterSimple` - Creates a trace filter for a single entity.
 
 ### CTraceFilterSkipTwoEntities
 Inherits from `CTraceFilterSimple`.
 
 **Constructor:**
-- `CTraceFilterSkipTwoEntities(ent1: entity, ent2: entity)`: Creates a trace filter ignoring two entities.
+- `CTraceFilterSkipTwoEntities(ent1: IClientEntity, ent2: IClientEntity, collision_group: number)`: Creates a trace filter ignoring two entities with a specified collision group.
 
 **Global Function:**
-- `traceFilterSkipTwoEntities(ent1: entity, ent2: entity): CTraceFilterSkipTwoEntities`
+- `traceFilterSkipTwoEntities(ent1: IClientEntity, ent2: IClientEntity): CTraceFilterSkipTwoEntities` - Creates a trace filter ignoring two entities.
 
-### input
+### IInput
 Manages input-related properties and user commands.
 
 **Properties:**
@@ -488,7 +505,7 @@ Manages input-related properties and user commands.
 - `cameraOffset`: vector - Offset of the camera in third-person mode.
 
 **Methods:**
-- `getUserCmd(commandNumber: number): usercmd | nil` - Retrieves the user command for the specified command number.
+- `getUserCmd(commandNumber: number): CUserCmd | nil` - Retrieves the user command for the specified command number.
 
 ### ConVar
 Inherits from `ConCommandBase`. Represents a console variable.
@@ -570,9 +587,9 @@ Collection of functions for registering event callbacks.
 ### entityList
 Functions for accessing game entities.
 
-- `getLocalPlayer(): entity` - Gets the local player entity.
-- `getPlayer(index: number): entity` - Gets a player entity by index.
-- `getEntityByHandle(handle: CBaseHandle): entity | nil` - Gets an entity by its handle. Returns `nil` if the handle is invalid.
+- `getLocalPlayer(): IClientEntity` - Gets the local player entity.
+- `getPlayer(index: number): IClientEntity` - Gets a player entity by index.
+- `getEntityByHandle(handle: CBaseHandle): IClientEntity | nil` - Gets an entity by its handle. Returns `nil` if the handle is invalid.
 
 ### events
 Functions for managing game event callbacks.
@@ -585,12 +602,13 @@ Functions for accessing network variable offsets.
 - `getFieldOffset(dataTable: string, fieldName: string): number` - Gets the offset of a field in a data table.
 
 ### cfg
-Functions for accessing configuration variables.
+Functions for accessing configuration variables and keybinds.
 
-- `getVar(name: string): cfgVar` - Gets a configuration variable by name.
+- `getVar(name: string): CConfigVariable` - Gets a configuration variable by name.
+- `getActiveKeybinds(): table` - Returns a table of active keybinds with their names and states.
 
 ### imgui
-Drawing functions for rendering UI elements.
+Drawing and UI functions for rendering elements.
 
 - `drawLine(p1: vector, p2: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void` - Draws a line between two points with specified color and thickness.
 - `drawRect(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0, thickness: number = 1.0): void` - Draws a rectangle outline with optional rounding and flags.
@@ -609,6 +627,14 @@ Drawing functions for rendering UI elements.
 - `drawConvexPolyFilled(points: table<vector>, count: number, r: number, g: number, b: number, a: number): void` - Draws a filled convex polygon from a table of points.
 - `drawBezierCubic(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void` - Draws a cubic Bezier curve.
 - `drawBezierQuadratic(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void` - Draws a quadratic Bezier curve.
+- `addFont(filepath: string, pixelSize: number): userdata` - Adds a font from the specified file path with given pixel size, returning a font handle.
+- `pushFont(font: userdata): void` - Pushes a font handle onto the font stack.
+- `popFont(): void` - Pops the current font from the font stack.
+- `checkbox(label: string, value: boolean, callback: function): void` - Renders a checkbox with the specified label and initial value, calling the callback with the new value on change.
+- `sliderInt(label: string, value: number, min: number, max: number, callback: function): void` - Renders an integer slider with the specified label, value, and range, calling the callback with the new value on change.
+- `sliderFloat(label: string, value: number, min: number, max: number, callback: function): void` - Renders a float slider with the specified label, value, and range, calling the callback with the new value on change.
+- `separator(callback: function): void` - Renders a horizontal separator, calling the callback when rendered.
+- `combo(label: string, elements: table<string>, defValue: number, callback: function): void` - Renders a dropdown combo box with the specified label, items, and default value, calling the callback with the selected index on change.
 
 ### debugOverlay
 Functions for rendering debug overlays in the game world.
@@ -628,6 +654,6 @@ Interfaces providing direct access to game systems and utilities.
 - `beams: IViewRenderBeams` - Manages rendering and manipulation of beams. Provides methods to create, update, and draw beams in the game world.
 - `cvar: ICvar` - Manages console variables. Allows finding and manipulating game configuration variables.
 - `engine: IVEngineClient` - Provides access to engine-related functionality, such as executing client commands, checking game state, and managing view angles.
-- `globalVars: globalVars` - Provides access to global game variables, including timing and network-related properties like current game time and tick count.
-- `input: input` - Manages input-related properties and user commands, such as camera settings and retrieving user input commands.
+- `globalVars: CGlobalVarsBase` - Provides access to global game variables, including timing and network-related properties like current game time and tick count.
+- `input: IInput` - Manages input-related properties and user commands, such as camera settings and retrieving user input commands.
 - `prediction: IPrediction` - Manages client-side prediction properties, including prediction state and command acknowledgment information.
