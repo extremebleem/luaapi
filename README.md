@@ -1,6 +1,6 @@
 # Lua API Documentation
 
-This document outlines the Lua API for interacting with game entities, weapons, input commands, configuration variables, events, and rendering utilities. The API is organized into enums, usertypes, and tables with their respective methods and properties.
+This document outlines the Lua API for interacting with game entities, weapons, input commands, global variables, configuration variables, events, beams, networking, and rendering utilities. The API is organized into enums, usertypes, tables, and global properties with their respective methods and properties.
 
 ## Enums
 
@@ -126,7 +126,31 @@ This document outlines the Lua API for interacting with game entities, weapons, 
 - `MASK_SPLITAREAPORTAL`: number
 - `MASK_CURRENT`: number
 
+### Network Flow
+- `FLOW_OUTGOING`: number - Represents outgoing network flow.
+- `FLOW_INCOMING`: number - Represents incoming network flow.
+- `MAX_FLOWS`: number - Maximum number of network flows.
+
 ## Usertypes
+
+### globalVars
+Represents global game variables, providing access to timing and network-related properties.
+
+**Properties:**
+- `realTime`: number - Real-world time since the game started.
+- `frameCount`: number - Total number of frames rendered.
+- `absoluteFrameTime`: number - Time taken for the current frame, including simulation.
+- `curTime`: number - Current game time.
+- `frameTime`: number - Time taken for the current frame’s simulation.
+- `maxClients`: number - Maximum number of clients allowed on the server.
+- `tickCount`: number - Total number of server ticks.
+- `intervalPerTick`: number - Time duration of a single server tick.
+- `interpolationAmount`: number - Amount of interpolation applied for rendering.
+- `simTicksThisFrame`: number - Number of simulation ticks in the current frame.
+- `networkProtocol`: number - Network protocol version.
+- `isClient`: boolean - Whether the game is running on the client side.
+- `timestampNetworkingBase`: number - Base timestamp for networking.
+- `timestampRandomizeWindow`: number - Window for randomizing network timestamps.
 
 ### vector
 Represents a 3D vector with x, y, z components.
@@ -209,7 +233,7 @@ Represents a game entity.
 - `absAngles`: vector - Absolute angles.
 
 **Methods:**
-- `getField(field: string): any` - Retrieves a field value by name.
+- `getField(field: string): any` -//*[@Assistant: Retrieves a field value by name.
 - `getNetvars(): entNetvars` - Returns the entity's network variables.
 
 ### wpnNetvars
@@ -346,6 +370,58 @@ Represents a game event.
 - `setFloat(key: string, value: number): void` - Sets a float value.
 - `setInt(key: string, value: number): void` - Sets an integer value.
 
+### Beam_t
+Represents a beam entity in the game.
+
+### BeamInfo_t
+Represents the configuration for creating a beam.
+
+**Properties:**
+- `type`: number - Type of the beam.
+- `startEnt`: entity | nil - Starting entity for the beam.
+- `startAttachment`: number - Attachment point on the start entity.
+- `endEnt`: entity | nil - Ending entity for the beam.
+- `endAttachment`: number - Attachment point on the end entity.
+- `vecStart`: vector - Starting position of the beam.
+- `vecEnd`: vector - Ending position of the beam.
+- `modelIndex`: number - Index of the beam's model.
+- `modelName`: string | nil - Name of the beam's model.
+- `haloIndex`: number - Index of the halo effect.
+- `haloName`: string | nil - Name of the halo effect.
+- `haloScale`: number - Scale of the halo effect.
+- `life`: number - Duration of the beam.
+- `width`: number - Width of the beam.
+- `endWidth`: number - Width at the end of the beam.
+- `fadeLength`: number - Length over which the beam fades.
+- `amplitude`: number - Amplitude of the beam's oscillation.
+- `brightness`: number - Brightness of the beam.
+- `speed`: number - Speed of the beam's animation.
+- `startFrame`: number - Starting frame for the beam's animation.
+- `frameRate`: number - Frame rate of the beam's animation.
+- `red`: number - Red color component.
+- `green`: number - Green color component.
+- `blue`: number - Blue color component.
+- `renderable`: boolean - Whether the beam is renderable.
+- `segments`: number - Number of segments in the beam.
+- `flags`: number - Beam flags.
+- `vecCenter`: vector - Center position for ring beams.
+- `startRadius`: number - Starting radius for ring beams.
+- `endRadius`: number - Ending radius for ring beams.
+
+### IViewRenderBeams
+Manages rendering and manipulation of beams.
+
+**Methods:**
+- `clearBeams(): void` - Clears all beams.
+- `createBeamEnts(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a beam between two entities.
+- `createBeamEntPoint(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a beam from an entity to a point.
+- `createBeamFollow(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a beam that follows an entity.
+- `createBeamRing(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a ring-shaped beam between entities.
+- `createBeamRingPoint(beamInfo: BeamInfo_t): Beam_t | nil` - Creates a ring-shaped beam at a point.
+- `freeBeam(beam: Beam_t): void` - Frees a beam.
+- `updateBeamInfo(beam: Beam_t, beamInfo: BeamInfo_t): void` - Updates a beam's properties.
+- `drawBeam(beam: Beam_t): void` - Draws a beam.
+
 ### surface_t
 Represents a surface.
 
@@ -404,54 +480,154 @@ Inherits from `CTraceFilterSimple`.
 **Global Function:**
 - `traceFilterSkipTwoEntities(ent1: entity, ent2: entity): CTraceFilterSkipTwoEntities`
 
+### input
+Manages input-related properties and user commands.
+
+**Properties:**
+- `cameraInThirdPerson`: boolean - Whether the camera is in third-person mode.
+- `cameraOffset`: vector - Offset of the camera in third-person mode.
+
+**Methods:**
+- `getUserCmd(commandNumber: number): usercmd | nil` - Retrieves the user command for the specified command number.
+
+### ConVar
+Inherits from `ConCommandBase`. Represents a console variable.
+
+**Properties:**
+- `parent`: ConVar - Parent console variable.
+- `defaultValue`: string - Default value of the console variable.
+- `strValue`: string - Current string value.
+- `strLength`: number - Length of the string value.
+- `flValue`: number - Current float value.
+- `nValue`: number - Current integer value.
+- `hasMin`: boolean - Whether the variable has a minimum value.
+- `minVal`: number - Minimum value.
+- `hasMax`: boolean - Whether the variable has a maximum value.
+- `maxVal`: number - Maximum value.
+
+### ICvar
+Manages console variables.
+
+**Methods:**
+- `findVar(name: string): ConVar | nil` - Finds a console variable by name.
+
+### INetChannel
+Inherits from `INetChannelInfo`. Represents a network channel for communication.
+
+**Methods:**
+- `getAvgLatency(flow: number): number` - Gets the average latency for the specified flow (`FLOW_OUTGOING` or `FLOW_INCOMING`).
+- `getLatency(flow: number): number` - Gets the current latency for the specified flow.
+- `getAvgChoke(flow: number): number` - Gets the average choke for the specified flow.
+- `getAvgLoss(flow: number): number` - Gets the average packet loss for the specified flow.
+- `isTimingOut(): boolean` - Checks if the network channel is timing out.
+- `getAddress(): string` - Gets the network address of the channel.
+
+### IVEngineClient
+Provides access to engine-related functionality.
+
+**Methods:**
+- `clientCmd(command: string): void` - Executes a client-side command.
+- `isInGame(): boolean` - Checks if the client is in a game.
+- `isConnected(): boolean` - Checks if the client is connected to a server.
+- `setViewAngles(angles: vector): void` - Sets the view angles.
+- `getViewAngles(): vector` - Gets the current view angles.
+- `getLastTimeStamp(): number` - Gets the last timestamp.
+- `conIsVisible(): boolean` - Checks if the console is visible.
+- `getScreenSize(): table<number, number>` - Returns the screen size as `{width, height}`.
+- `isPaused(): boolean` - Checks if the game is paused.
+- `isTakingScreenshot(): boolean` - Checks if a screenshot is being taken.
+- `isRecordingDemo(): boolean` - Checks if a demo is being recorded.
+- `isPlayingDemo(): boolean` - Checks if a demo is being played.
+- `getNetChannel(): INetChannel | nil` - Gets the current network channel.
+
+### IPrediction
+Manages prediction-related properties for client-side simulation.
+
+**Properties:**
+- `inPrediction`: boolean - Whether prediction is active.
+- `firstTimePredicted`: boolean - Whether this is the first time prediction is run.
+- `oldCLPredictValue`: boolean - Previous client prediction value.
+- `previousStartFrame`: number - Previous start frame for prediction.
+- `commandsPredicted`: number - Number of commands predicted.
+- `serverCommandsAcknowledged`: number - Number of server commands acknowledged.
+- `previousAckHadErrors`: boolean - Whether the previous acknowledgment had errors.
+- `incomingPacketNumber`: number - Incoming packet number.
+- `idealPitch`: number - Ideal pitch for the player.
+
 ## Tables
 
 ### callbacks
+Collection of functions for registering event callbacks.
+
 - `createMove(func: function): void` - Registers a callback for the create move event.
 - `createMovePostPredict(func: function): void` - Registers a callback for post-prediction create move.
 - `createMovePostRestore(func: function): void` - Registers a callback for post-restore create move.
 - `onPresent(func: function): void` - Registers a callback for the present event.
 - `onGameEvent(func: function): void` - Registers a callback for game events.
+- `onLevelInit(func: function): void` - Registers a callback for level initialization (post-entity).
+- `onLevelShutdown(func: function): void` - Registers a callback for level shutdown.
 
 ### entityList
+Functions for accessing game entities.
+
 - `getLocalPlayer(): entity` - Gets the local player entity.
 - `getPlayer(index: number): entity` - Gets a player entity by index.
 - `getEntityByHandle(handle: CBaseHandle): entity | nil` - Gets an entity by its handle. Returns `nil` if the handle is invalid.
 
 ### events
+Functions for managing game event callbacks.
+
 - `registerEvent(event: string, func: function): void` - Registers a function for a specific game event.
 
 ### netvars
+Functions for accessing network variable offsets.
+
 - `getFieldOffset(dataTable: string, fieldName: string): number` - Gets the offset of a field in a data table.
 
 ### cfg
+Functions for accessing configuration variables.
+
 - `getVar(name: string): cfgVar` - Gets a configuration variable by name.
 
 ### imgui
 Drawing functions for rendering UI elements.
 
-- `drawLine(p1: vector, p2: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawRect(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0, thickness: number = 1.0): void`
-- `drawRectFilled(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0): void`
-- `drawRectFilledMultiColor(p_min: vector, p_max: vector, r1: number, g1: number, b1: number, a1: number, r2: number, g2: number, b2: number, a2: number, r3: number, g3: number, b3: number, a3: number, r4: number, g4: number, b4: number, a4: number): void`
-- `drawQuad(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawQuadFilled(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number): void`
-- `drawTriangle(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawTriangleFilled(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number): void`
-- `drawCircle(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0, thickness: number = 1.0): void`
-- `drawCircleFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0): void`
-- `drawNgon(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number, thickness: number = 1.0): void`
-- `drawNgonFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number): void`
-- `drawText(pos: vector, r: number, g: number, b: number, a: number, text: string): void`
-- `drawPolyline(points: table<vector>, count: number, r: number, g: number, b: number, a: number, flags: number, thickness: number): void`
-- `drawConvexPolyFilled(points: table<vector>, count: number, r: number, g: number, b: number, a: number): void`
-- `drawBezierCubic(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
-- `drawBezierQuadratic(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
+- `drawLine(p1: vector, p2: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void` - Draws a line between two points with specified color and thickness.
+- `drawRect(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0, thickness: number = 1.0): void` - Draws a rectangle outline with optional rounding and flags.
+- `drawRectFilled(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0): void` - Draws a filled rectangle with optional rounding and flags.
+- `drawRectFilledMultiColor(p_min: vector, p_max: vector, r1: number, g1: number, b1: number, a1: number, r2: number, g2: number, b2: number, a2: number, r3: number, g3: number, b3: number, a3: number, r4: number, g4: number, b4: number, a4: number): void` - Draws a filled rectangle with gradient colors at each corner.
+- `drawQuad(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void` - Draws a quadrilateral outline.
+- `drawQuadFilled(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number): void` - Draws a filled quadrilateral.
+- `drawTriangle(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void` - Draws a triangle outline.
+- `drawTriangleFilled(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number): void` - Draws a filled triangle.
+- `drawCircle(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0, thickness: number = 1.0): void` - Draws a circle outline with optional segment count.
+- `drawCircleFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0): void` - Draws a filled circle with optional segment count.
+- `drawNgon(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number, thickness: number = 1.0): void` - Draws an n-sided polygon outline.
+- `drawNgonFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number): void` - Draws a filled n-sided polygon.
+- `drawText(pos: vector, r: number, g: number, b: number, a: number, text: string): void` - Draws text at a specified position with color.
+- `drawPolyline(points: table<vector>, count: number, r: number, g: number, b: number, a: number, flags: number, thickness: number): void` - Draws a polyline from a table of points.
+- `drawConvexPolyFilled(points: table<vector>, count: number, r: number, g: number, b: number, a: number): void` - Draws a filled convex polygon from a table of points.
+- `drawBezierCubic(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void` - Draws a cubic Bezier curve.
+- `drawBezierQuadratic(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void` - Draws a quadratic Bezier curve.
 
 ### debugOverlay
-- `addBoxOverlay(origin: vector, mins: vector, max: vector, orientation: vector, r: number, g: number, b: number, a: number, duration: number): void`
-- `addLineOverlay(origin: vector, dest: vector, r: number, g: number, b: number, noDepthTest: boolean, duration: number): void`
+Functions for rendering debug overlays in the game world.
+
+- `addBoxOverlay(origin: vector, mins: vector, max: vector, orientation: vector, r: number, g: number, b: number, a: number, duration: number): void` - Draws a box overlay at the specified origin with given bounds and orientation.
+- `addLineOverlay(origin: vector, dest: vector, r: number, g: number, b: number, noDepthTest: boolean, duration: number): void` - Draws a line overlay between two points with optional depth testing.
 - `worldToScreen(pos: vector): vector` - Converts a world position to screen coordinates.
 
 ### engineTrace
-- `traceRay(start: vector, end: vector, mask: number, filter: ITraceFilter): trace_t` - Performs a ray trace.
+Functions for performing trace operations.
+
+- `traceRay(start: vector, end: vector, mask: number, filter: ITraceFilter): trace_t` - Performs a ray trace from start to end with specified mask and filter.
+
+## Global Properties
+Interfaces providing direct access to game systems and utilities.
+
+- `beams: IViewRenderBeams` - Manages rendering and manipulation of beams. Provides methods to create, update, and draw beams in the game world.
+- `cvar: ICvar` - Manages console variables. Allows finding and manipulating game configuration variables.
+- `engine: IVEngineClient` - Provides access to engine-related functionality, such as executing client commands, checking game state, and managing view angles.
+- `globalVars: globalVars` - Provides access to global game variables, including timing and network-related properties like current game time and tick count.
+- `input: input` - Manages input-related properties and user commands, such as camera settings and retrieving user input commands.
+- `prediction: IPrediction` - Manages client-side prediction properties, including prediction state and command acknowledgment information.
