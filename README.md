@@ -132,8 +132,7 @@ This document outlines the Lua API for interacting with game entities, input com
 Represents a 3D vector with x, y, z components.
 
 **Constructors:**
-- `vector()`: Creates a zero vector.
-- `vector(x: number, y: number, z: number)`: Creates a vector with specified coordinates.
+- `Vector(x: number, y: number, z: number)`: Creates a vector with specified coordinates.
 
 **Properties:**
 - `x`: number
@@ -159,21 +158,16 @@ Represents a 3D vector with x, y, z components.
 - `* (number | vector)`: Multiplies by a scalar or component-wise with another vector.
 - `/ (number | vector)`: Divides by a scalar or component-wise by another vector.
 
-**Global Function:**
-- `Vector(x: number, y: number, z: number): vector` - Creates a new vector.
-
 ### entity
 Represents a game entity.
 
-**Properties:**
+**Methods:**
 - `teamNum`: number - Team number.
 - `isAlive`: boolean - Whether the entity is alive.
 - `absVelocity`: vector - Absolute velocity.
 - `absOrigin`: vector - Absolute origin.
 - `absAngles`: vector - Absolute angles.
 - `health`: number - Health value.
-
-**Methods:**
 - `getField(field: string): any` - Retrieves a field value by name.
 
 ### usercmd
@@ -249,37 +243,22 @@ Represents a trace result.
 - `allSolid`: boolean
 - `startSolid`: boolean
 
-### ITraceFilter
-Base type for trace filters.
-
-### CTraceFilter
-Inherits from `ITraceFilter`.
 
 ### CTraceFilterSimple
-Inherits from `CTraceFilter`.
-
 **Constructor:**
 - `CTraceFilterSimple(ent: entity)`: Creates a trace filter for a single entity.
 
-**Global Function:**
-- `traceFilterSimple(ent: entity): CTraceFilterSimple`
-
 ### CTraceFilterSkipTwoEntities
-Inherits from `CTraceFilterSimple`.
-
 **Constructor:**
 - `CTraceFilterSkipTwoEntities(ent1: entity, ent2: entity)`: Creates a trace filter ignoring two entities.
-
-**Global Function:**
-- `traceFilterSkipTwoEntities(ent1: entity, ent2: entity): CTraceFilterSkipTwoEntities`
 
 ## Tables
 
 ### callbacks
 - `createMove(func: function): void` - Registers a callback for the create move event.
 - `createMovePostPredict(func: function): void` - Registers a callback for post-prediction create move.
-- `createMovePostRestore(func: function): void` - Registers a callback for post-restore create move.
-- `onPresent(func: function): void` - Registers a callback for the present event.
+- `createMovePostRestore(func: function): void` - Registers a callback for post-prediction data restore create move.
+- `onPresent(func: function): void` - Registers a callback for the DirectX present event.
 - `onGameEvent(func: function): void` - Registers a callback for game events.
 
 ### entityList
@@ -298,23 +277,23 @@ Inherits from `CTraceFilterSimple`.
 ### imgui
 Drawing functions for rendering UI elements.
 
-- `drawLine(p1: vector, p2: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawRect(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0, thickness: number = 1.0): void`
-- `drawRectFilled(p_min: vector, p_max: vector, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0): void`
-- `drawRectFilledMultiColor(p_min: vector, p_max: vector, r1: number, g1: number, b1: number, a1: number, r2: number, g2: number, b2: number, a2: number, r3: number, g3: number, b3: number, a3: number, r4: number, g4: number, b4: number, a4: number): void`
-- `drawQuad(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawQuadFilled(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number): void`
-- `drawTriangle(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
-- `drawTriangleFilled(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number): void`
-- `drawCircle(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0, thickness: number = 1.0): void`
-- `drawCircleFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number = 0): void`
-- `drawNgon(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number, thickness: number = 1.0): void`
-- `drawNgonFilled(center: vector, radius: number, r: number, g: number, b: number, a: number, segments: number): void`
-- `drawText(pos: vector, r: number, g: number, b: number, a: number, text: string): void`
-- `drawPolyline(points: table<vector>, count: number, r: number, g: number, b: number, a: number, flags: number, thickness: number): void`
-- `drawConvexPolyFilled(points: table<vector>, count: number, r: number, g: number, b: number, a: number): void`
-- `drawBezierCubic(p1: vector, p2: vector, p3: vector, p4: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
-- `drawBezierQuadratic(p1: vector, p2: vector, p3: vector, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
+- `drawLine(p1: ImVec2, p2: ImVec2, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
+- `drawRect(p_min: ImVec2, p_max: ImVec2, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0, thickness: number = 1.0): void`
+- `drawRectFilled(p_min: ImVec2, p_max: ImVec2, r: number, g: number, b: number, a: number, rounding: number = 0.0, flags: number = 0): void`
+- `drawRectFilledMultiColor(p_min: ImVec2, p_max: ImVec2, r1: number, g1: number, b1: number, a1: number, r2: number, g2: number, b2: number, a2: number, r3: number, g3: number, b3: number, a3: number, r4: number, g4: number, b4: number, a4: number): void`
+- `drawQuad(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
+- `drawQuadFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, r: number, g: number, b: number, a: number): void`
+- `drawTriangle(p1: ImVec2, p2: ImVec2, p3: ImVec2, r: number, g: number, b: number, a: number, thickness: number = 1.0): void`
+- `drawTriangleFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, r: number, g: number, b: number, a: number): void`
+- `drawCircle(center: ImVec2, radius: number, r: number, g: number, b: number, a: number, segments: number = 0, thickness: number = 1.0): void`
+- `drawCircleFilled(center: ImVec2, radius: number, r: number, g: number, b: number, a: number, segments: number = 0): void`
+- `drawNgon(center: ImVec2, radius: number, r: number, g: number, b: number, a: number, segments: number, thickness: number = 1.0): void`
+- `drawNgonFilled(center: ImVec2, radius: number, r: number, g: number, b: number, a: number, segments: number): void`
+- `drawText(pos: ImVec2, r: number, g: number, b: number, a: number, text: string): void`
+- `drawPolyline(points: table<ImVec2>, count: number, r: number, g: number, b: number, a: number, flags: number, thickness: number): void`
+- `drawConvexPolyFilled(points: table<ImVec2>, count: number, r: number, g: number, b: number, a: number): void`
+- `drawBezierCubic(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
+- `drawBezierQuadratic(p1: ImVec2, p2: ImVec2, p3: ImVec2, r: number, g: number, b: number, a: number, thickness: number, segments: number = 0): void`
 
 ### debugOverlay
 - `addBoxOverlay(origin: vector, mins: vector, max: vector, orientation: vector, r: number, g: number, b: number, a: number, duration: number): void`
